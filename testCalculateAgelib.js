@@ -5,7 +5,7 @@ let calculateAgelib = require("./calculateAgelib.js");
 let birthDay = calculateAgelib.split("10/11/1996")
 assert.deepEqual(birthDay,{day : 10, month : 11, year : 1996},"Error in split()");
 
-//---------testing findTodaysDate()----------
+//-problemetic--------testing findTodaysDate()----------
 let today = calculateAgelib.findTodaysDate();
 console.log(today);
 //assert.deepEqual(today,{day : 12, month : 10, year : 2018},"Error in findTodaysDate()");
