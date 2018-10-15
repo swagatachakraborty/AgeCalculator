@@ -1,56 +1,38 @@
-const createAllMonthDetails = function () {
-  let monthsAndDays = [
-    ["Jan",31],
-    ["Feb",28],
-    ["Mar",31],
-    ["Apr",30],
-    ["May",31],
-    ["Jun",30],
-    ["Jul",31],
-    ["Aug",31],
-    ["Sep",30],
-    ["Oct",31],
-    ["Nov",30],
-    ["Dec",31]
-  ];
-  const MONTHS = [];
-  for(let monthIndex = 0; monthIndex < 12; monthIndex++) {
-    MONTHS[monthIndex] = {
-      name : monthsAndDays[monthIndex][0],
-      days : generateTotalDaysOf(monthsAndDays[monthIndex]),
-      value : monthIndex + 1
-    };
+const checkLeapYear = function(year) {
+  let days = 28;
+  let isLeapYear = (year % 400 == 0) || (year % 100 != 0 && year % 4 == 0);
+  if(isLeapYear) {
+    days ++;
   }
-  return MONTHS;
+  return days;
 }
+
+const year = Date().split(" ")[3];
+const day = Date().split(" ")[2];
+const month = Date().split(" ")[1];
+const monthsAndDays = {
+  "Jan":{ days :31, sequence :1 },
+  "Feb":{ days :checkLeapYear(year), sequence :2 },
+  "Mar":{ days :31, sequence :3 },
+  "Apr":{ days :30, sequence :4 },
+  "May":{ days :31, sequence :5 },
+  "Jun":{ days :30, sequence :6 },
+  "Jul":{ days :31, sequence :7 },
+  "Aug":{ days :31, sequence :8 },
+  "Sep":{ days :30, sequence :9 },
+  "Oct":{ days :31, sequence :10 },
+  "Nov":{ days :30, sequence :11 },
+  "Dec":{ days :31, sequence :12 }
+};
+const today = { day : day, month : monthsAndDays[month].sequence, year : year};
 
 const split = function (dateOfBirth) {
   birthDay = {
     day : dateOfBirth.split("/")[0],
-    month : dateOfBirth.split("/")[1],
+    month : findMonthValue(dateOfBirth.split("/")[1]),
     year : dateOfBirth.split("/")[2]
   };
   return birthDay;
-}
-
-const findTodaysDate = function () {
-  today = {
-    day : Date().split(" ")[2],
-    month : Date().split(" ")[1],
-    year : Date().split(" ")[3]
-  };
-  return today;
-}
-
-const isLeapYear = function(year) {
-  return (year % 400 == 0) || (year % 100 != 0 && year % 4 == 0);
-}
-
-const generateTotalDaysOf = function (monthAndDays) {
-  if(monthAndDays[0] == "Feb" && isLeapYear(findTodaysDate().year)){
-    return monthAndDays[1] + 1;
-  }
-  return monthAndDays[1];
 }
 
 const areDifferent = function(value1,value2) {
@@ -61,14 +43,15 @@ const areDifferent = function(value1,value2) {
 }
 
 const findMonthValue = function (month) {
-  const MONTHS = createAllMonthDetails();
+  let months = createAllMonthDetails();
   let isMonthsDifferent = true;
-  let monthIndex = 0;
+  let monthIndex = -1;
   while(isMonthsDifferent) {
-    isMonthsDifferent = areDifferent( MONTHS[monthIndex].name, month );
     monthIndex++;
+    console.log("months[",monthIndex,"]=",months[monthIndex]);
+    isMonthsDifferent = areDifferent( months[monthIndex].name, month );
   }
-  return MONTHS[monthIndex].value;
+  return months[monthIndex].value;
 }
 
 const splitName = function (name) {
@@ -91,12 +74,13 @@ const computeAge = function (dateOfBirth) {
 }
 
 exports.split = split;
-exports.findTodaysDate = findTodaysDate;
-exports.isLeapYear = isLeapYear;
-exports.createAllMonthDetails = createAllMonthDetails;
+exports.monthsAndDays = monthsAndDays;
+exports.checkLeapYear = checkLeapYear;
+exports.today = today;
 exports.generateTotalDaysOf = generateTotalDaysOf;
 exports.findMonthValue = findMonthValue;
 exports.splitName = splitName;
 exports.areDifferent = areDifferent;
 //exports.computeAgeDiff = computeAgeDiff;
 //exports.computeAge = computeAge;
+
