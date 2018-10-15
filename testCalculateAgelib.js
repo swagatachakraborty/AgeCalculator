@@ -1,22 +1,31 @@
 let assert = require("assert");
 let calculateAgelib = require("./calculateAgelib.js");
 
+const checkAssert = function (actualOutput, expectedOutput, errorMessage) { 
+  assert.deepEqual(actualOutput, expectedOutput,errorMessage);
+}
+
 //---------testing split()----------
 let birthDay = calculateAgelib.split("10/11/1996")
-assert.deepEqual(birthDay,{day : 10, month : 11, year : 1996},"Error in split()");
+checkAssert(birthDay,{day : 10, month : 11, year : 1996},"Error in split()");
 console.log("split() works fine");
 
+//---------testing today----------
+let today = calculateAgelib.today;
+checkAssert(today,{day : 15, month : 10, year : 2018},"Error in today");
+console.log("today works fine");
+
 //---------testing calculateDaysInFeb()----------
-assert.deepEqual(calculateAgelib.calculateDaysInFeb(1700),28,"Error in calculateDaysInFeb()");
-assert.deepEqual(calculateAgelib.calculateDaysInFeb(1600),29,"Error in calculateDaysInFeb()");
-assert.deepEqual(calculateAgelib.calculateDaysInFeb(2016),29,"Error in calculateDaysInFeb()");
-assert.deepEqual(calculateAgelib.calculateDaysInFeb(2011),28,"Error in calculateDaysInFeb()");
+checkAssert(calculateAgelib.calculateDaysInFeb(1700),28,"Error in calculateDaysInFeb()");
+checkAssert(calculateAgelib.calculateDaysInFeb(1600),29,"Error in calculateDaysInFeb()");
+checkAssert(calculateAgelib.calculateDaysInFeb(2016),29,"Error in calculateDaysInFeb()");
+checkAssert(calculateAgelib.calculateDaysInFeb(2011),28,"Error in calculateDaysInFeb()");
 console.log("calculateDaysInFeb() works fine");
 
 
 //---------testing splitName()----------
 let name = calculateAgelib.splitName("Swagata Chakraborty");
-assert.deepEqual(name,{fname : "Swagata", lname : "Chakraborty"},"Error in splitName()");
+checkAssert(name,{fname : "Swagata", lname : "Chakraborty"},"Error in splitName()");
 console.log("splitName() works fine");
 
 let outputFromFunction = calculateAgelib.monthsAndDays;
@@ -32,6 +41,6 @@ let correntOutput = { 'Jan': { days: 31, sequence: 1 },
    'Oct': {days: 31, sequence: 10 },
    'Nov': {days: 30, sequence: 11 },
    'Dec': {days: 31, sequence: 12 } };
-assert.deepEqual(outputFromFunction,correntOutput,"Error in monthsAndDays");
+checkAssert(outputFromFunction,correntOutput,"Error in monthsAndDays");
 console.log("monthsAndDays works fine");
 
