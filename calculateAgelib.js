@@ -1,4 +1,4 @@
-const checkLeapYear = function(year) {
+const calculateDaysInFeb = function(year) {
   let days = 28;
   let isLeapYear = (year % 400 == 0) || (year % 100 != 0 && year % 4 == 0);
   if(isLeapYear) {
@@ -8,11 +8,11 @@ const checkLeapYear = function(year) {
 }
 
 const year = Date().split(" ")[3];
-const day = Date().split(" ")[2];
+const date = Date().split(" ")[2];
 const month = Date().split(" ")[1];
 const monthsAndDays = {
   "Jan":{ days :31, sequence :1 },
-  "Feb":{ days :checkLeapYear(year), sequence :2 },
+  "Feb":{ days :calculateDaysInFeb(year), sequence :2 },
   "Mar":{ days :31, sequence :3 },
   "Apr":{ days :30, sequence :4 },
   "May":{ days :31, sequence :5 },
@@ -24,34 +24,15 @@ const monthsAndDays = {
   "Nov":{ days :30, sequence :11 },
   "Dec":{ days :31, sequence :12 }
 };
-const today = { day : day, month : monthsAndDays[month].sequence, year : year};
+const today = { date : date, month : monthsAndDays[month].sequence, year : year};
 
 const split = function (dateOfBirth) {
   birthDay = {
-    day : dateOfBirth.split("/")[0],
-    month : findMonthValue(dateOfBirth.split("/")[1]),
+    date : dateOfBirth.split("/")[0],
+    month : dateOfBirth.split("/")[1],
     year : dateOfBirth.split("/")[2]
   };
   return birthDay;
-}
-
-const areDifferent = function(value1,value2) {
-  if(value1 == value2){
-    return false;
-  }
-  return true;
-}
-
-const findMonthValue = function (month) {
-  let months = createAllMonthDetails();
-  let isMonthsDifferent = true;
-  let monthIndex = -1;
-  while(isMonthsDifferent) {
-    monthIndex++;
-    console.log("months[",monthIndex,"]=",months[monthIndex]);
-    isMonthsDifferent = areDifferent( months[monthIndex].name, month );
-  }
-  return months[monthIndex].value;
 }
 
 const splitName = function (name) {
@@ -62,9 +43,24 @@ const splitName = function (name) {
   return fullname;
 }
 
+const findTotalDaysOfMonth = function(month) {
+  return Object.values(monthsAndDays)[month - 1].days;
+}
+
+//const computeAge  = function(birthDay) {
+//  let year = today.year - birthDay.year - 1;
+//  let month = 11 + today.month - birthDay.month;
+//  let day;
+//  if(today.day > birthDay.day) {
+//    month ++;
+//    day = today.date - birthDay.date;
+//  }
+//
+//  if(
+//}
+
 const computeAge = function (dateOfBirth) { 
   let birthDay = split(dateOfBirth);
-  today = findTodaysDate();
   let age = {
     year : computeAgeDiff(birthDay,today,year),
     month : computeAgeDiff(birthDay,today,month), 
@@ -75,12 +71,9 @@ const computeAge = function (dateOfBirth) {
 
 exports.split = split;
 exports.monthsAndDays = monthsAndDays;
-exports.checkLeapYear = checkLeapYear;
+exports.calculateDaysInFeb = calculateDaysInFeb;
 exports.today = today;
-exports.generateTotalDaysOf = generateTotalDaysOf;
-exports.findMonthValue = findMonthValue;
 exports.splitName = splitName;
-exports.areDifferent = areDifferent;
+exports.findTotalDaysOfMonth = findTotalDaysOfMonth;
 //exports.computeAgeDiff = computeAgeDiff;
 //exports.computeAge = computeAge;
-
