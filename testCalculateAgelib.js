@@ -25,7 +25,7 @@ console.log("calculateDaysInFeb() works fine");
 
 //---------testing splitName()----------
 let name = calculateAgelib.splitName("Swagata Chakraborty");
-checkAssert(calculateAgelib.splitName.name,"Swagata Chakraborty",name,{fname : "Swagata", lname : "Chakraborty"},"Error in splitName()");
+checkAssert(calculateAgelib.splitName.name,"Swagata Chakraborty",name,{first_name : "Swagata", last_name : "Chakraborty"},"Error in splitName()");
 console.log("splitName() works fine");
 
 //---------testing monthsAndDays----------

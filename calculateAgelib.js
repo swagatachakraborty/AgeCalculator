@@ -1,7 +1,7 @@
 const splitName = function (name) {
   let fullname = {
-    fname : name.split(" ")[0],
-    lname : name.split(" ")[1],
+    first_name : name.split(" ")[0],
+    last_name : name.split(" ")[1],
   };
   return fullname;
 }
